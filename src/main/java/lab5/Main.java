@@ -16,6 +16,7 @@ import akka.japi.Pair;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import akka.stream.javadsl.Keep;
 import akka.stream.javadsl.Source;
 import akka.util.Timeout;
 import com.sun.xml.internal.ws.util.CompletedFuture;
@@ -72,7 +73,7 @@ public class Main {
                             return new CompletedFuture<Integer>((Integer) res, null);
                         }
                         return Source.single(new TestMsg(p.first(), p.second()))
-                                .toMat(1, 2).run(mat);
+                                .toMat(1, Keep.right()).run(mat);
                     });
                 });
 
