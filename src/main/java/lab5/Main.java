@@ -41,7 +41,7 @@ public class Main {
 
     public static Flow<HttpRequest, HttpResponse, NotUsed> createFlow(Http http, ActorSystem system,
                                                                       ActorMaterializer mat){
-        ActorRef cache = mat.actorOf(Props.create(CacheActor.class));
+        ActorRef cache = system.actorOf(Props.create(CacheActor.class));
         Flow.of(HttpRequest.class)
                 .map((req) ->{
                     Query q = req.getUri().query();
