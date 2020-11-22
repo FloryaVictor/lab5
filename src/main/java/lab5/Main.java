@@ -7,7 +7,7 @@ import akka.actor.Props;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
-import akka.http.javadsl.model.HttpEntity;
+
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.model.Query;
@@ -15,8 +15,7 @@ import akka.japi.Pair;
 
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
-import akka.stream.Graph;
-import akka.stream.SinkShape;
+
 import akka.stream.javadsl.Flow;
 import akka.stream.javadsl.Keep;
 import akka.stream.javadsl.Sink;
@@ -30,16 +29,16 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.ExecutionException;
+
 import java.util.concurrent.Future;
 
 import lab5.Messages.StoreMsg;
 import org.asynchttpclient.*;
-import scala.Int;
+
 
 import static org.asynchttpclient.Dsl.*;
 
