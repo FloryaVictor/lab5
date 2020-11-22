@@ -65,9 +65,8 @@ public class Main {
                 })
                 .mapAsync(1, (Pair<String, Integer> p)->{
                     CompletionStage<Object> cs = Patterns.ask(cache, new GetMsg(p.first()), timeout);
-                    cs.thenApply((Object res)->{
-                        Integer time = (Integer)res;
-
+                    cs.thenCompose((Object res)->{
+                        
                     });
                 });
 
