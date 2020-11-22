@@ -65,6 +65,7 @@ public class Main {
                         }
                         Graph<SinkShape<Pair<String, Integer>>, CompletionStage<HttpResponse>> teskSink =
                                 Flow.<Pair<String, Integer>>create()
+                                .mapConcat()
                         return Source.single(p)
                                 .toMat(teskSink, Keep.right()).run(mat);
                     });
