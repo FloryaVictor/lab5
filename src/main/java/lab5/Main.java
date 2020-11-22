@@ -38,7 +38,7 @@ public class Main {
                                                                       ActorMaterializer mat){
         Flow.of(HttpRequest.class)
                 .map((req) ->{
-                    return new Pair<String, Integer>
+                    return new Pair<String, Integer>();
                 })
     }
 }
