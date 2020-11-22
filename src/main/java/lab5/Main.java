@@ -71,10 +71,9 @@ public class Main {
                                 .mapConcat(pair->{
                                     return new ArrayList<>(Collections.nCopies(pair.second(), pair.first()));
                                 })
-                                .mapAsync(p.second(), url->{
+                                .mapAsync(p.second(), (String url)->{
                                     return new Integer(1);
                                 })
-                                .
 
                         return Source.single(p)
                                 .toMat(testSink, Keep.right()).run(mat);
