@@ -29,6 +29,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Future;
+
 import org.asynchttpclient.*;
 
 public class Main {
@@ -76,6 +78,8 @@ public class Main {
                                 .mapAsync(p.second(), (String url)->{
                                     Instant t1 = Instant.now();
                                     
+                                    Future<Response> whenResponse = asyncHttpClient.prepareGet("http://www.example.com/").execute();
+
                                 })
 
 
