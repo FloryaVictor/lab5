@@ -1,13 +1,10 @@
 package lab5;
 
 import akka.NotUsed;
-import akka.actor.Actor;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
-import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
-import akka.http.javadsl.ServerBinding;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.model.Query;
@@ -20,21 +17,13 @@ import akka.stream.SinkShape;
 import akka.stream.javadsl.Flow;
 import akka.stream.javadsl.Keep;
 import akka.stream.javadsl.Source;
-import akka.util.Timeout;
 import com.sun.xml.internal.ws.util.CompletedFuture;
 import lab5.Actors.CacheActor;
 import lab5.Messages.GetMsg;
 
-import lab5.Messages.TestMsg;
-import scala.Int;
-import scala.concurrent.Future;
-
 import java.io.IOException;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import java.util.function.Function;
 
 
 public class Main {
@@ -74,9 +63,9 @@ public class Main {
                         if (res != null) {
                             return new CompletedFuture<Integer>((Integer) res, null);
                         }
-                        Graph<SinkShape<TestMsg>, CompletionStage<HttpResponse>> teskSink =
+                        Graph<SinkShape<Pair<String, Integer>>, CompletionStage<HttpResponse>> teskSink =
                                 Flow<>
-                        return Source.single(new TestMsg(p.first(), p.second()))
+                        return Source.single(p)
                                 .toMat(teskSink, Keep.right()).run(mat);
                     });
                 });
