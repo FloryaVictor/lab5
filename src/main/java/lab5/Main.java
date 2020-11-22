@@ -31,6 +31,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import lab5.Messages.StoreMsg;
@@ -90,8 +91,17 @@ public class Main {
                                     asyncHttpClient.close();
                                     return CompletableFuture.completedFuture((int) time);
                                 });
-                        return Source.single(p).via(interFlow).toMat(Sink.fold(0, Integer::sum))
+                        CompletionStage<Integer> time = Source.single(p)
+                                .via(interFlow)
+                                .toMat(Sink.fold(0, Integer::sum), Keep.right())
+                                .run(mat)
+                                .thenApply(sum->sum/p.second());
 
+//                        try {
+//                            return CompletableFuture.completedFuture(time.toCompletableFuture().get());
+//                        } catch (InterruptedException | ExecutionException e) {
+//                            e.printStackTrace();
+//                        }
                     });
                 });
 
