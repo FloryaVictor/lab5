@@ -72,6 +72,7 @@ public class Main {
                         if (res != null) {
                             return new CompletedFuture<Integer>((Integer) res, null);
                         }
+                        
                         return Source.single(new TestMsg(p.first(), p.second()))
                                 .toMat(1, Keep.right()).run(mat);
                     });
