@@ -76,9 +76,8 @@ public class Main {
                 })
                 .mapAsync(1, (Pair<String, Integer> p)->{
                     CompletionStage<Object> cs = Patterns.ask(cache, new GetMsg(p.first()), timeout);
-                    System.out.println(p.first());
-                    System.out.println(p.second());
                     cs.thenApply((Object res)->{
+                        System.out.println((Integer)res);
                         if ((Integer)res  >= 0) {
                             return new CompletedFuture<>(new Pair<>(p.first(), (Integer) res),
                                     null);
