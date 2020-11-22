@@ -12,15 +12,23 @@ import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.model.Query;
 import akka.japi.Pair;
+
+import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import akka.util.Timeout;
 import lab5.Actors.CacheActor;
+import lab5.Messages.GetMsg;
+import scala.concurrent.Future;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.HashMap;
-import java.util.concurrent.CompletionStage;
+
 
 public class Main {
+    private final static Timeout timeout = Timeout.create(Duration.ofSeconds(5));
+
     public static void main(String[] args) throws IOException {
 //        System.out.println("start!");
 //        ActorSystem system = ActorSystem.create("lab5");
@@ -49,8 +57,10 @@ public class Main {
                     Integer count = Integer.parseInt(q.get("count").get());
                     return new Pair<String, Integer>(url, count);
                 })
-                .mapAsync((Pair<String, Integer> p)->{
-                    
+                .mapAsync(1, (Pair<String, Integer> p)->{
+                    Future<Object> f = Patterns.ask(cache, new GetMsg(p.first()), timeout);
+                    return new Pair<>
                 })
+
     }
 }
