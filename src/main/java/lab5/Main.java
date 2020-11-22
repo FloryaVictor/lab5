@@ -74,7 +74,7 @@ public class Main {
                         if (res != null) {
                             return new CompletedFuture<Integer>((Integer) res, null);
                         }
-                        Sink<Integer, CompletionStage<Integer>> sink = Sink.fold(0, Integer::sum);
+                        Sink<Integer, CompletionStage<Integer>> fold = Sink.fold(0, Integer::sum);
                         Graph<SinkShape<Pair<String, Integer>>, CompletionStage<HttpResponse>> testSink =
                                 Flow.<Pair<String, Integer>>create()
                                 .mapConcat(pair->{
@@ -89,7 +89,7 @@ public class Main {
                                     asyncHttpClient.close();
                                     return CompletableFuture.completedFuture((int) time);
                                 })
-                                .toMat(, Keep.right());
+                                .toMat(fold, Keep.right());
 
 
                         return Source.single(p)
