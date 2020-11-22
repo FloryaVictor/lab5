@@ -87,7 +87,7 @@ public class Main {
                                     asyncHttpClient.close();
                                     return CompletableFuture.completedFuture((int) time);
                                 })
-                                .map();
+                                .toMat();
 
 
                         return Source.single(p)
