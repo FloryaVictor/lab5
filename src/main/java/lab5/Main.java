@@ -7,6 +7,7 @@ import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
+import akka.http.javadsl.model.Query;
 import akka.japi.Pair;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
@@ -38,7 +39,8 @@ public class Main {
                                                                       ActorMaterializer mat){
         Flow.of(HttpRequest.class)
                 .map((req) ->{
-                    return new Pair<String, Integer>();
+                    Query q = req.getUri().query();
+                    return new Pair<String, Integer>(q.get());
                 })
     }
 }
