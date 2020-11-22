@@ -9,7 +9,7 @@ import lab5.Messages.StoreMsg;
 import java.util.HashMap;
 
 public class CacheActor extends AbstractActor {
-    private final HashMap<String, Long> cache = new HashMap<>();
+    private final HashMap<String, Integer> cache = new HashMap<>();
 
     @Override
     public Receive createReceive() {
