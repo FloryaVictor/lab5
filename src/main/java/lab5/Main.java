@@ -31,9 +31,5 @@ public class Main {
 //        binding
 //                .thenCompose(ServerBinding::unbind)
 //                .thenAccept(unbound -> system.terminate());
-        HashMap<String, String> h = new HashMap<>();
-        h.replace("a","b");
-        h.replace("a", "c");
-        System.out.println(h.get("a"));
     }
 }
