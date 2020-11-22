@@ -69,7 +69,8 @@ public class Main {
                         Graph<SinkShape<Pair<String, Integer>>, CompletionStage<HttpResponse>> testSink =
                                 Flow.<Pair<String, Integer>>create()
                                 .mapConcat(pair->{
-                                    return new ArrayList<String>(Collections.nCopies(pair.first(), pair.second()));
+                                    return new ArrayList<String>(Collections.nCopies(pair.second(), pair.first()));
+
                                 })
 
                         return Source.single(p)
