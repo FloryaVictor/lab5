@@ -40,6 +40,7 @@ public class Main {
         Flow.of(HttpRequest.class)
                 .map((req) ->{
                     Query q = req.getUri().query();
+                    String url = q.get()
                     return new Pair<String, Integer>(q.get());
                 })
     }
