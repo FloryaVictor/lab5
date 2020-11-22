@@ -76,7 +76,7 @@ public class Main {
                 })
                 .mapAsync(1, (Pair<String, Integer> p)->{
                     CompletionStage<Object> cs = Patterns.ask(cache, new GetMsg(p.first()), timeout);
-                    cs.thenApply((Object res)->{
+                    return cs.thenApply((Object res)->{
                         if ((Integer)res >= 0) {
                             return new CompletedFuture<>(new Pair<>(p.first(), (Integer) res),
                                     null);
@@ -103,14 +103,11 @@ public class Main {
                                     return new Pair<>(p.first(), sum/p.second());
                                 });
                     });
-                    Integer r = (Integer) cs.toCompletableFuture().get();
-                    System.out.println(r);
-                    return cs;
                 })
                 .map((Object o)->{
-//                    Pair<String, Integer> p = (Pair<String, Integer>)o;
-//                    cache.tell(new StoreMsg(p.first(), p.second()), ActorRef.noSender());
-                    return HttpResponse.create().withEntity(String.valueOf((Integer)o));
+                    Pair<String, Integer> p = (Pair<String, Integer>)o;
+                    cache.tell(new StoreMsg(p.first(), p.second()), ActorRef.noSender());
+                    return HttpResponse.create().withEntity(String.valueOf(p.second()));
                 });
     }
 }
