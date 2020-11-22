@@ -45,7 +45,7 @@ import static org.asynchttpclient.Dsl.*;
 
 public class Main {
     private final static Duration timeout = Duration.ofSeconds(5);
-
+    private final static AsyncHttpClient asyncHttpClient = asyncHttpClient();
     public static void main(String[] args) throws IOException {
         System.out.println("start!");
         ActorSystem system = ActorSystem.create("lab5");
@@ -88,11 +88,9 @@ public class Main {
                                 })
                                 .mapAsync(p.second(), (String url)->{
                                     Instant t = Instant.now();
-                                    AsyncHttpClient asyncHttpClient = asyncHttpClient();
                                     Future<Response> resp = asyncHttpClient.prepareGet(url).execute();
                                     resp.get();
                                     long time = t.until(Instant.now(), ChronoUnit.MILLIS);
-                                    asyncHttpClient.close();
                                     return CompletableFuture.completedFuture((int) time);
                                 });
                         return Source.single(p)
