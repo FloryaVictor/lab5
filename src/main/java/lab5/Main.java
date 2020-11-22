@@ -89,7 +89,7 @@ public class Main {
                                     asyncHttpClient.close();
                                     return CompletableFuture.completedFuture((int) time);
                                 })
-                                .toMat(fold, Keep.right());
+                                .toMat(fold, Keep.right()).runWith();
 
 
                         return Source.single(p)
