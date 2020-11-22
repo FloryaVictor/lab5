@@ -59,9 +59,9 @@ public class Main {
                     return new Pair<String, Integer>(url, count);
                 })
                 .mapAsync(1, (Pair<String, Integer> p)->{
-                    CompletionStage<Object> f = Patterns.ask(cache, new GetMsg(p.first()), timeout);
-                    
-                })
+                    CompletionStage<Object> cs = Patterns.ask(cache, new GetMsg(p.first()), timeout);
+                    cs.thenCompose();
+                });
 
     }
 }
