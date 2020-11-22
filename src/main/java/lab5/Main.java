@@ -101,11 +101,12 @@ public class Main {
                                 .run(mat)
                                 .thenApply(sum->{
                                     return new Pair<>(p.first(), sum/p.second());
-                                });
+                                }).toCompletableFuture().get();
                     });
                 })
                 .map((Object o)->{
-                    Pair<String, Integer> p = (Pair<String, Integer>)o;
+                    CompletableFuture<Pair<String, Integer>> f = (CompletableFuture)o;
+                    Pair<String, Integer> p = f.get();
                     cache.tell(new StoreMsg(p.first(), p.second()), ActorRef.noSender());
                     return HttpResponse.create().withEntity(String.valueOf(p.second()));
                 });
