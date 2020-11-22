@@ -73,7 +73,7 @@ public class Main {
                 })
                 .mapAsync(1, (Pair<String, Integer> p)->{
                     CompletionStage<Object> cs = Patterns.ask(cache, new GetMsg(p.first()), timeout);
-                    cs.thenCompose((Object res)->{
+                    cs.thenApply((Object res)->{
                         if (res != null) {
                             return new CompletedFuture<Integer>((Integer) res, null);
                         }
@@ -91,17 +91,11 @@ public class Main {
                                     asyncHttpClient.close();
                                     return CompletableFuture.completedFuture((int) time);
                                 });
-                        CompletionStage<Integer> time = Source.single(p)
+                        return Source.single(p)
                                 .via(interFlow)
                                 .toMat(Sink.fold(0, Integer::sum), Keep.right())
                                 .run(mat)
                                 .thenApply(sum->sum/p.second());
-
-//                        try {
-//                            return CompletableFuture.completedFuture(time.toCompletableFuture().get());
-//                        } catch (InterruptedException | ExecutionException e) {
-//                            e.printStackTrace();
-//                        }
                     });
                 });
 
