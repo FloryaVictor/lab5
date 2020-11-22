@@ -84,7 +84,7 @@ public class Main {
                                     resp.get();
                                     Long time = t.until(Instant.now(), ChronoUnit.MILLIS);
                                     asyncHttpClient.close();
-                                    return Future;
+                                    return CompletableFuture;
                                 })
                                 .map()
 
