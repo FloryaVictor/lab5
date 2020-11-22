@@ -27,6 +27,7 @@ import scala.concurrent.Future;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.function.Function;
 
@@ -65,7 +66,7 @@ public class Main {
                 .mapAsync(1, (Pair<String, Integer> p)->{
                     CompletionStage<Object> cs = Patterns.ask(cache, new GetMsg(p.first()), timeout);
                     Function<Integer, CompletionStage<Integer>> f = (Integer i)->{
-                        return 
+                        return CompletableFuture.runAsync()
                     };
                     cs.thenCompose(
 
