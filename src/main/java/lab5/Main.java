@@ -78,9 +78,9 @@ public class Main {
                     CompletionStage<Object> cs = Patterns.ask(cache, new GetMsg(p.first()), timeout);
                     cs.thenApply((Object res)->{
                         if ((Integer)res  >= 0) {
+                            System.out.println("here");
                             return new CompletedFuture<>(new Pair<>(p.first(), (Integer) res),
                                     null);
-                            System.out.println("here");
                         }
 
                         Flow<Pair<String, Integer>, Integer, NotUsed> interFlow =
