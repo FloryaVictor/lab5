@@ -24,6 +24,7 @@ import scala.concurrent.Future;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.concurrent.CompletionStage;
 
 
 public class Main {
@@ -59,7 +60,7 @@ public class Main {
                 })
                 .mapAsync(1, (Pair<String, Integer> p)->{
                     Future<Object> f = Patterns.ask(cache, new GetMsg(p.first()), timeout);
-                    return new Pair<>
+                    return 
                 })
 
     }
