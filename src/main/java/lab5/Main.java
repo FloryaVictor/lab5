@@ -20,6 +20,7 @@ import akka.util.Timeout;
 import com.sun.xml.internal.ws.util.CompletedFuture;
 import lab5.Actors.CacheActor;
 import lab5.Messages.GetMsg;
+
 import scala.Int;
 import scala.concurrent.Future;
 
@@ -27,6 +28,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.concurrent.CompletionStage;
+import java.util.function.Function;
 
 
 public class Main {
@@ -62,9 +64,13 @@ public class Main {
                 })
                 .mapAsync(1, (Pair<String, Integer> p)->{
                     CompletionStage<Object> cs = Patterns.ask(cache, new GetMsg(p.first()), timeout);
-                    cs.thenCompose((Integer time) ->{
-                        return new CompletedFuture<Object>((Integer) time, null);
+                    Function<Integer, CompletionStage<Integer>> f = (Integer i)->{
+                        return 
+                    };
+                    cs.thenCompose(
+
                     });
+
                 });
 
     }
