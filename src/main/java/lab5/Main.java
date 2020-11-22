@@ -78,10 +78,10 @@ public class Main {
                                 })
                                 .mapAsync(p.second(), (String url)->{
                                     Instant t1 = Instant.now();
-                                    Instant t2;
                                     AsyncHttpClient asyncHttpClient = asyncHttpClient();
                                     Future<Response> resp = asyncHttpClient.prepareGet(url).execute();
-                                    
+                                    resp.get();
+                                    Long time = 
                                     asyncHttpClient.close();
                                 })
 
