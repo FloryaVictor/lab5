@@ -1,7 +1,10 @@
 package lab5;
 
 import akka.NotUsed;
+import akka.actor.Actor;
+import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
+import akka.actor.Props;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
@@ -11,6 +14,7 @@ import akka.http.javadsl.model.Query;
 import akka.japi.Pair;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import lab5.Actors.CacheActor;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -37,6 +41,7 @@ public class Main {
 
     public static Flow<HttpRequest, HttpResponse, NotUsed> createFlow(Http http, ActorSystem system,
                                                                       ActorMaterializer mat){
+        ActorRef cache = mat.actorOf(Props.create(CacheActor.class));
         Flow.of(HttpRequest.class)
                 .map((req) ->{
                     Query q = req.getUri().query();
@@ -45,7 +50,7 @@ public class Main {
                     return new Pair<String, Integer>(url, count);
                 })
                 .mapAsync((Pair<String, Integer> p)->{
-                    
+
                 })
     }
 }
