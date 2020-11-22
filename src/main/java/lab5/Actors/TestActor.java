@@ -3,6 +3,7 @@ package lab5.Actors;
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
+import akka.japi.pf.ReceiveBuilder;
 
 public class TestActor extends AbstractActor {
     private final ActorRef cacheActor = getContext().actorOf(
@@ -11,6 +12,7 @@ public class TestActor extends AbstractActor {
 
     @Override
     public Receive createReceive() {
-        return null;
+        return ReceiveBuilder.create()
+                .match()
     }
 }
