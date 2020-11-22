@@ -74,7 +74,7 @@ public class Main {
                         if (res != null) {
                             return new CompletedFuture<Integer>((Integer) res, null);
                         }
-                        Graph<SinkShape<Pair<String, Integer>>, CompletionStage<HttpResponse>> testSink =
+                        Flow<Pair<String, Integer>, Integer, NotUsed>  =
                                 Flow.<Pair<String, Integer>>create()
                                 .mapConcat(pair->{
                                     return new ArrayList<>(Collections.nCopies(pair.second(), pair.first()));
@@ -87,8 +87,7 @@ public class Main {
                                     long time = t.until(Instant.now(), ChronoUnit.MILLIS);
                                     asyncHttpClient.close();
                                     return CompletableFuture.completedFuture((int) time);
-                                })
-                                .toMat(Sink.fold(0, Integer::sum), Keep.right());
+                                });
 
                         return Source.single(p)
                                 .toMat(testSink, Keep.right()).run(mat);
