@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.concurrent.CompletionStage;
 
 
@@ -68,7 +69,7 @@ public class Main {
                         Graph<SinkShape<Pair<String, Integer>>, CompletionStage<HttpResponse>> testSink =
                                 Flow.<Pair<String, Integer>>create()
                                 .mapConcat(p->{
-                                    return Collection
+                                    return 
                                 })
 
                         return Source.single(p)
