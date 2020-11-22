@@ -15,7 +15,7 @@ public class CacheActor extends AbstractActor {
     public Receive createReceive() {
         return ReceiveBuilder.create()
                 .match(GetMsg.class, msg->{
-                    getSender().tell(cache.getOrDefault(msg.getUrl(), null), ActorRef.noSender());
+                    getSender().tell(cache.getOrDefault(msg.getUrl(), -1), ActorRef.noSender());
                 })
                 .match(StoreMsg.class, msg->{
                     cache.put(msg.getUrl(), msg.getTime());
