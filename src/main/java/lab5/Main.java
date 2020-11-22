@@ -26,6 +26,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 
@@ -72,8 +73,9 @@ public class Main {
                                     return new ArrayList<>(Collections.nCopies(pair.second(), pair.first()));
                                 })
                                 .mapAsync(p.second(), (String url)->{
-                                    return new Integer(1);
+                                        
                                 })
+
 
                         return Source.single(p)
                                 .toMat(testSink, Keep.right()).run(mat);
