@@ -75,7 +75,7 @@ public class Main {
                             return new CompletedFuture<Integer>((Integer) res, null);
                         }
                         Graph<SinkShape<TestMsg>, CompletionStage<HttpResponse>> teskSink =
-                                
+                                Flow<>
                         return Source.single(new TestMsg(p.first(), p.second()))
                                 .toMat(teskSink, Keep.right()).run(mat);
                     });
