@@ -79,7 +79,6 @@ public class Main {
                                 .mapAsync(p.second(), (String url)->{
                                     Instant t1 = Instant.now();
                                     AsyncHttpClient asyncHttpClient = asyncHttpClient();
-                                    
                                     Future<Response> whenResponse = asyncHttpClient.prepareGet("http://www.example.com/").execute();
 
                                 })
