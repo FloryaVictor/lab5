@@ -2,8 +2,8 @@ package lab5.Messages;
 
 public class StoreMsg {
     private final String url;
-    private final Integer time;
-    public StoreMsg(String url, Integer time){
+    private final Long time;
+    public StoreMsg(String url, Long time){
         this.url = url;
         this.time = time;
     }
@@ -12,7 +12,7 @@ public class StoreMsg {
         return url;
     }
 
-    public Integer getTime() {
+    public Long getTime() {
         return time;
     }
 }
