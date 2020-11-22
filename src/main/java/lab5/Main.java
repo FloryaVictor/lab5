@@ -5,6 +5,7 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.http.javadsl.Http;
+import akka.http.javadsl.model.HttpEntity;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.model.Query;
@@ -75,7 +76,8 @@ public class Main {
                     CompletionStage<Object> cs = Patterns.ask(cache, new GetMsg(p.first()), timeout);
                     cs.thenApply((Object res)->{
                         if (res != null) {
-                            return new CompletedFuture<Integer>((Integer) res, null);
+                            return new CompletedFuture<>(new Pair<>(p.first(), (Integer) res),
+                                    null);
                         }
                         Flow<Pair<String, Integer>, Integer, NotUsed> interFlow =
                                 Flow.<Pair<String, Integer>>create()
@@ -95,8 +97,13 @@ public class Main {
                                 .via(interFlow)
                                 .toMat(Sink.fold(0, Integer::sum), Keep.right())
                                 .run(mat)
-                                .thenApply(sum->sum/p.second());
+                                .thenApply(sum->new Pair<>(p.first(), sum/p.second()));
                     });
+                    return cs;
+                })
+                .map((Pair<String, Integer> p)->{
+                    cache.tell(new StoreMsg(p.first(), p.second()), ActorRef.noSender());
+                    return HttpResponse.create()
                 });
 
     }
