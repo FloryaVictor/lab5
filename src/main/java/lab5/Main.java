@@ -44,6 +44,8 @@ public class Main {
                     Integer count = Integer.parseInt(q.get("count").get());
                     return new Pair<String, Integer>(url, count);
                 })
-                
+                .mapAsync((Pair<String, Integer> p)->{
+                    
+                })
     }
 }
