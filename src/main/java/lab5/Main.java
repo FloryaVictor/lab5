@@ -22,6 +22,7 @@ import com.sun.xml.internal.ws.util.CompletedFuture;
 import lab5.Actors.CacheActor;
 import lab5.Messages.GetMsg;
 
+import lab5.Messages.TestMsg;
 import scala.Int;
 import scala.concurrent.Future;
 
@@ -70,7 +71,7 @@ public class Main {
                         if (res != null) {
                             return new CompletedFuture<Integer>((Integer) res, null);
                         }
-                        return Source.single(p)
+                        return Source.single(new TestMsg(p.first(), p.second()))
                                 .toMat().run(mat);
                     });
                 });
