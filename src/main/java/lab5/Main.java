@@ -23,6 +23,7 @@ import lab5.Messages.GetMsg;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -73,7 +74,7 @@ public class Main {
                                     return new ArrayList<>(Collections.nCopies(pair.second(), pair.first()));
                                 })
                                 .mapAsync(p.second(), (String url)->{
-                                    
+                                    Instant t1;
                                 })
 
 
