@@ -101,9 +101,10 @@ public class Main {
                     });
                     return cs;
                 })
-                .map((Pair<String, Integer> p)->{
+                .map((Object o)->{
+                    Pair<String, Integer> p = (Pair<String, Integer>)o;
                     cache.tell(new StoreMsg(p.first(), p.second()), ActorRef.noSender());
-                    return HttpResponse.create()
+                    return HttpResponse.create().withEntity(new HttpEntity);
                 });
 
     }
