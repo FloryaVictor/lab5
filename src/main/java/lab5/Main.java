@@ -83,9 +83,10 @@ public class Main {
                                     Future<Response> resp = asyncHttpClient.prepareGet(url).execute();
                                     resp.get();
                                     Long time = t.until(Instant.now(), ChronoUnit.MILLIS);
-                                    
                                     asyncHttpClient.close();
+                                    return Future;
                                 })
+                                .map()
 
 
                         return Source.single(p)
