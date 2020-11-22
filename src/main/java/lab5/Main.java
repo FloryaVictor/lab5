@@ -7,6 +7,7 @@ import akka.http.javadsl.model.HttpResponse;
 import akka.stream.ActorMaterializer;
 
 public class Main {
-    
-
+    public static void main(String[] args){
+        
+    }
 }
