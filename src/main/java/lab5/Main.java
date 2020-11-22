@@ -82,6 +82,7 @@ public class Main {
                             return new CompletedFuture<>(new Pair<>(p.first(), (Integer) res),
                                     null);
                         }
+                        System.out.println(1);
                         Flow<Pair<String, Integer>, Integer, NotUsed> interFlow =
                                 Flow.<Pair<String, Integer>>create()
                                 .mapConcat(pair->{
