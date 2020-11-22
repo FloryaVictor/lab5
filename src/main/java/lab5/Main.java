@@ -24,6 +24,7 @@ import lab5.Messages.GetMsg;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -81,7 +82,8 @@ public class Main {
                                     AsyncHttpClient asyncHttpClient = asyncHttpClient();
                                     Future<Response> resp = asyncHttpClient.prepareGet(url).execute();
                                     resp.get();
-                                    Long time = t.until(Instant.now(), )
+                                    Long time = t.until(Instant.now(), ChronoUnit.MILLIS);
+                                    
                                     asyncHttpClient.close();
                                 })
 
