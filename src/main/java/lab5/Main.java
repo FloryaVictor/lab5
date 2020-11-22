@@ -77,11 +77,11 @@ public class Main {
                                     return new ArrayList<>(Collections.nCopies(pair.second(), pair.first()));
                                 })
                                 .mapAsync(p.second(), (String url)->{
-                                    Instant t1 = Instant.now();
+                                    Instant t = Instant.now();
                                     AsyncHttpClient asyncHttpClient = asyncHttpClient();
                                     Future<Response> resp = asyncHttpClient.prepareGet(url).execute();
                                     resp.get();
-                                    Long time = 
+                                    Long time = t.until(Instant.now(), )
                                     asyncHttpClient.close();
                                 })
 
