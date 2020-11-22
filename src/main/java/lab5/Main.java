@@ -103,8 +103,8 @@ public class Main {
                                     return new Pair<>(p.first(), sum/p.second());
                                 });
                     });
-                    Pair<String, Integer> r = (Pair<String, Integer>) cs.toCompletableFuture().get();
-                    System.out.println(r.second());
+                    Integer r = (Integer) cs.toCompletableFuture().get();
+                    System.out.println(r);
                     return cs;
                 })
                 .map((Object o)->{
