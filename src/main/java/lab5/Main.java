@@ -1,10 +1,12 @@
 package lab5;
 
+import akka.NotUsed;
 import akka.actor.ActorSystem;
+import akka.http.javadsl.model.HttpRequest;
+import akka.http.javadsl.model.HttpResponse;
 import akka.stream.ActorMaterializer;
 
 public class Main {
-    ActorSystem system = ActorSystem.create("lab5");
-    ActorMaterializer materializer = ActorMaterializer.create(system);
     
+
 }
