@@ -102,10 +102,10 @@ public class Main {
                     });
                 })
                 .map((Object o)->{
-                    CompletableFuture<Pair<String, Integer>> f = (CompletableFuture<Pair<String, Integer>>)o;
-                    Pair<String, Integer> p = f.get();
-                    cache.tell(new StoreMsg(p.first(), p.second()), ActorRef.noSender());
-                    return HttpResponse.create().withEntity(String.valueOf(p.second()));
+//                    CompletableFuture<Pair<String, Integer>> f = (CompletableFuture<Pair<String, Integer>>)o;
+//                    Pair<String, Integer> p = f.get();
+//                    cache.tell(new StoreMsg(p.first(), p.second()), ActorRef.noSender());
+                    return HttpResponse.create().withEntity(String.valueOf(1));
                 });
     }
 }
