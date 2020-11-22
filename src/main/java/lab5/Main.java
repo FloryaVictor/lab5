@@ -93,7 +93,7 @@ public class Main {
                                     resp.get();
                                     long time = t.until(Instant.now(), ChronoUnit.MILLIS);
                                     asyncHttpClient.close();
-                                    System.out.println(time);
+                                    System.out.println((int)time);
                                     return CompletableFuture.completedFuture((int) time);
                                 });
                         return Source.single(p)
