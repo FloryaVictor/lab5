@@ -46,12 +46,14 @@ import static org.asynchttpclient.Dsl.*;
 public class Main {
     private final static Duration timeout = Duration.ofSeconds(5);
     private final static AsyncHttpClient asyncHttpClient = asyncHttpClient();
+    private static ActorRef cache;
     public static void main(String[] args) throws IOException {
         System.out.println("start!");
         ActorSystem system = ActorSystem.create("lab5");
+        cache  = system.actorOf(Props.create(CacheActor.class));
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = createFlow(system, materializer);
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = createFlow(materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                routeFlow,
                ConnectHttp.toHost("localhost", 8080),
@@ -64,9 +66,7 @@ public class Main {
                 .thenAccept(unbound -> system.terminate());
     }
 
-    public static Flow<HttpRequest, HttpResponse, NotUsed> createFlow(ActorSystem system,
-                                                                      ActorMaterializer mat){
-        ActorRef cache = system.actorOf(Props.create(CacheActor.class));
+    public static Flow<HttpRequest, HttpResponse, NotUsed> createFlow(ActorMaterializer mat){
         return Flow.of(HttpRequest.class)
                 .map((req) ->{
                     Query q = req.getUri().query();
