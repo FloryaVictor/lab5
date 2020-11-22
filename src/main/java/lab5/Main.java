@@ -74,7 +74,8 @@ public class Main {
                                     return new ArrayList<>(Collections.nCopies(pair.second(), pair.first()));
                                 })
                                 .mapAsync(p.second(), (String url)->{
-                                    Instant t1;
+                                    Instant t1 = Instant.now();
+                                    
                                 })
 
 
