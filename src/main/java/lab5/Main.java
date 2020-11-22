@@ -74,7 +74,7 @@ public class Main {
                         if (res != null) {
                             return new CompletedFuture<Integer>((Integer) res, null);
                         }
-                        Sink<Integer, Integer> sink = Sink.fold(0, (agg, next)-> agg +
+                        Sink<Integer, Integer> sink = Sink.fold(0, (Integer agg, Integer next)-> agg +
                                 next);
                         Graph<SinkShape<Pair<String, Integer>>, CompletionStage<HttpResponse>> testSink =
                                 Flow.<Pair<String, Integer>>create()
