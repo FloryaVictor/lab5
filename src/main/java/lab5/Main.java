@@ -15,6 +15,8 @@ import akka.japi.Pair;
 
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
+import akka.stream.Graph;
+import akka.stream.SinkShape;
 import akka.stream.javadsl.Flow;
 import akka.stream.javadsl.Keep;
 import akka.stream.javadsl.Source;
@@ -72,9 +74,10 @@ public class Main {
                         if (res != null) {
                             return new CompletedFuture<Integer>((Integer) res, null);
                         }
-                        
+                        Graph<SinkShape<TestMsg>, CompletionStage<HttpResponse>> teskSink =
+                                
                         return Source.single(new TestMsg(p.first(), p.second()))
-                                .toMat(1, Keep.right()).run(mat);
+                                .toMat(teskSink, Keep.right()).run(mat);
                     });
                 });
 
