@@ -32,6 +32,7 @@ import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Future;
 
 import org.asynchttpclient.*;
+import static org.asynchttpclient.Dsl.*;
 
 public class Main {
     private final static Duration timeout = Duration.ofSeconds(5);
@@ -77,7 +78,7 @@ public class Main {
                                 })
                                 .mapAsync(p.second(), (String url)->{
                                     Instant t1 = Instant.now();
-                                    AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+                                    AsyncHttpClient asyncHttpClient = asyncHttpClient();
                                     Future<Response> whenResponse = asyncHttpClient.prepareGet("http://www.example.com/").execute();
 
                                 })
