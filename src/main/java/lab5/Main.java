@@ -32,6 +32,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Future;
 
+import lab5.Messages.StoreMsg;
 import org.asynchttpclient.*;
 import static org.asynchttpclient.Dsl.*;
 
@@ -82,11 +83,11 @@ public class Main {
                                     AsyncHttpClient asyncHttpClient = asyncHttpClient();
                                     Future<Response> resp = asyncHttpClient.prepareGet(url).execute();
                                     resp.get();
-                                    Long time = t.until(Instant.now(), ChronoUnit.MILLIS);
+                                    long time = t.until(Instant.now(), ChronoUnit.MILLIS);
                                     asyncHttpClient.close();
-                                    return CompletableFuture;
+                                    return CompletableFuture.completedFuture((int) time);
                                 })
-                                .map()
+                                .map();
 
 
                         return Source.single(p)
