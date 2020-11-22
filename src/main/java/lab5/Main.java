@@ -100,10 +100,11 @@ public class Main {
                                 .toMat(Sink.fold(0, Integer::sum), Keep.right())
                                 .run(mat)
                                 .thenApply(sum->{
-                                    System.out.println(sum/p.second());
                                     return new Pair<>(p.first(), sum/p.second());
                                 });
                     });
+                    Pair<String, Integer> r = (Pair<String, Integer>) cs.toCompletableFuture().get();
+                    System.out.println(r.second());
                     return cs;
                 })
                 .map((Object o)->{
