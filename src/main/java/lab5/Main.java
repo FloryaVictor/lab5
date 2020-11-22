@@ -73,7 +73,7 @@ public class Main {
                         if (res != null) {
                             return new CompletedFuture<Integer>((Integer) res, null);
                         }
-                        RunnableGraph interFlow =
+                        RunnableGraph<CompletionStage> interFlow =
                                 Flow.<Pair<String, Integer>>create()
                                 .mapConcat(pair->{
                                     return new ArrayList<>(Collections.nCopies(pair.second(), pair.first()));
