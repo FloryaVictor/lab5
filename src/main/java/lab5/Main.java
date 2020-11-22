@@ -65,7 +65,7 @@ public class Main {
                 })
                 .mapAsync(1, (Pair<String, Integer> p)->{
                     CompletionStage<Object> cs = Patterns.ask(cache, new GetMsg(p.first()), timeout);
-                    Function<Integer, CompletionStage<Integer>> f = (Integer i)->{
+                    Function<Integer, CompletableFuture<Integer>> f = (Integer i)->{
                         return CompletableFuture.runAsync()
                     };
                     cs.thenCompose(
