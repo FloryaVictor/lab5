@@ -7,6 +7,8 @@ import akka.japi.pf.ReceiveBuilder;
 import lab5.Messages.GetMsg;
 import lab5.Messages.TestMsg;
 
+import java.util.concurrent.CompletionStage;
+
 public class TestActor extends AbstractActor {
     private final ActorRef cacheActor = getContext().actorOf(
             Props.create(CacheActor.class)
@@ -19,7 +21,8 @@ public class TestActor extends AbstractActor {
 
                 })
                 .match(GetMsg.class, msg->{
-
+                    CompletionStage<Integer> res = PatterncacheActor.tell(msg, getSelf());
+                    getSender().tell();
                 })
                 .build();
     }
