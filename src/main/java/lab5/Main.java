@@ -41,8 +41,9 @@ public class Main {
                 .map((req) ->{
                     Query q = req.getUri().query();
                     String url = q.get("testUrl").get();
-                    Integer count = q.get()
-                    return new Pair<String, Integer>(q.get());
+                    Integer count = Integer.parseInt(q.get("count").get());
+                    return new Pair<String, Integer>(url, count);
                 })
+                
     }
 }
