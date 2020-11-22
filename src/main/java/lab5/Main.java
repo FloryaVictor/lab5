@@ -32,8 +32,8 @@ public class Main {
 //                .thenCompose(ServerBinding::unbind)
 //                .thenAccept(unbound -> system.terminate());
         HashMap<String, String> h = new HashMap<>();
-        h.put("a","b");
-        h.put("a","c");
+        h.replace("a","b");
+        h.replace("a", "c");
         System.out.println(h.get("a"));
     }
 }
