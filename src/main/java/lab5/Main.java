@@ -16,6 +16,7 @@ import akka.japi.Pair;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import akka.stream.javadsl.Source;
 import akka.util.Timeout;
 import com.sun.xml.internal.ws.util.CompletedFuture;
 import lab5.Actors.CacheActor;
@@ -69,7 +70,7 @@ public class Main {
                         if (res != null) {
                             return new CompletedFuture<Integer>((Integer) res, null);
                         }
-                        
+                        return Source.from()
                     });
                 });
 
