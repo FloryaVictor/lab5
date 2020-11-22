@@ -28,7 +28,7 @@ import java.util.concurrent.CompletionStage;
 
 
 public class Main {
-    private final static Timeout timeout = Timeout.create(Duration.ofSeconds(5));
+    private final static Duration timeout = Duration.ofSeconds(5);
 
     public static void main(String[] args) throws IOException {
 //        System.out.println("start!");
@@ -59,14 +59,8 @@ public class Main {
                     return new Pair<String, Integer>(url, count);
                 })
                 .mapAsync(1, (Pair<String, Integer> p)->{
-                    Future<Object> f = Patterns.ask(cache, new GetMsg(p.first()), timeout);
+                    CompletionStage<Object> f = Patterns.ask(cache, new GetMsg(p.first()), timeout);
                     
-                    Integer time = (Integer)f.value().get().get();
-                    if (time != null)
-                    {
-                        return
-                    }
-
                 })
 
     }
