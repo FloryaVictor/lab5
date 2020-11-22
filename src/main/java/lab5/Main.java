@@ -60,8 +60,8 @@ public class Main {
                 })
                 .mapAsync(1, (Pair<String, Integer> p)->{
                     CompletionStage<Object> cs = Patterns.ask(cache, new GetMsg(p.first()), timeout);
-                    cs.thenCompose((Integer time) ->{
-
+                    cs.thenCompose(time ->{
+                        return new CompletionStage<Object>(time);
                     });
                 });
 
