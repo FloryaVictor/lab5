@@ -71,7 +71,7 @@ public class Main {
                             return new CompletedFuture<Integer>((Integer) res, null);
                         }
                         return Source.single(p)
-                                .toMat().
+                                .toMat().run(mat);
                     });
                 });
 
