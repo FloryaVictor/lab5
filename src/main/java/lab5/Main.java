@@ -60,7 +60,12 @@ public class Main {
                 })
                 .mapAsync(1, (Pair<String, Integer> p)->{
                     Future<Object> f = Patterns.ask(cache, new GetMsg(p.first()), timeout);
-                    return 
+                    Integer time = (Integer)f.value().get().get();
+                    if (time != null)
+                    {
+                        return 
+                    }
+
                 })
 
     }
