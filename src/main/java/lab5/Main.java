@@ -14,10 +14,7 @@ import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.Graph;
 import akka.stream.SinkShape;
-import akka.stream.javadsl.Flow;
-import akka.stream.javadsl.Keep;
-import akka.stream.javadsl.Sink;
-import akka.stream.javadsl.Source;
+import akka.stream.javadsl.*;
 import com.sun.xml.internal.ws.util.CompletedFuture;
 import lab5.Actors.CacheActor;
 import lab5.Messages.GetMsg;
@@ -76,7 +73,7 @@ public class Main {
                         if (res != null) {
                             return new CompletedFuture<Integer>((Integer) res, null);
                         }
-                        Flow<Pair<String, Integer>, Integer, NotUsed> interFlow =
+                        RunnableGraph interFlow =
                                 Flow.<Pair<String, Integer>>create()
                                 .mapConcat(pair->{
                                     return new ArrayList<>(Collections.nCopies(pair.second(), pair.first()));
@@ -89,7 +86,7 @@ public class Main {
                                     long time = t.until(Instant.now(), ChronoUnit.MILLIS);
                                     asyncHttpClient.close();
                                     return CompletableFuture.completedFuture((int) time);
-                                }).toMat(Sink.fold(0, Integer::sum), );
+                                }).toMat(Sink.fold(0, Integer::sum), Keep.right());
                         return
 
                     });
