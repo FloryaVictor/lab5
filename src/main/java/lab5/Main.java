@@ -93,14 +93,16 @@ public class Main {
                                     resp.get();
                                     long time = t.until(Instant.now(), ChronoUnit.MILLIS);
                                     asyncHttpClient.close();
-                                    System.out.println((int)time);
                                     return CompletableFuture.completedFuture((int) time);
                                 });
                         return Source.single(p)
                                 .via(interFlow)
                                 .toMat(Sink.fold(0, Integer::sum), Keep.right())
                                 .run(mat)
-                                .thenApply(sum->new Pair<>(p.first(), sum/p.second()));
+                                .thenApply(sum->{
+                                    System.out.println(sum);
+                                    return new Pair<>(p.first(), sum/p.second());
+                                });
                     });
                     return cs;
                 })
