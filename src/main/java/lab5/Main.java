@@ -77,12 +77,10 @@ public class Main {
                 .mapAsync(1, (Pair<String, Integer> p)->{
                     CompletionStage<Object> cs = Patterns.ask(cache, new GetMsg(p.first()), timeout);
                     cs.thenApply((Object res)->{
-                        if ((Integer)res  >= 0) {
-                            System.out.println("here");
+                        if ((Integer)res >= 0) {
                             return new CompletedFuture<>(new Pair<>(p.first(), (Integer) res),
                                     null);
                         }
-
                         Flow<Pair<String, Integer>, Integer, NotUsed> interFlow =
                                 Flow.<Pair<String, Integer>>create()
                                 .mapConcat(pair->{
@@ -95,6 +93,7 @@ public class Main {
                                     resp.get();
                                     long time = t.until(Instant.now(), ChronoUnit.MILLIS);
                                     asyncHttpClient.close();
+                                    System.out.println(time);
                                     return CompletableFuture.completedFuture((int) time);
                                 });
                         return Source.single(p)
