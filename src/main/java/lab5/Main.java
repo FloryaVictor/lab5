@@ -103,7 +103,7 @@ public class Main {
                     });
                 })
                 .map((Object o)->{
-                    CompletableFuture<Pair<String, Integer>> f = (CompletableFuture)o;
+                    CompletedFuture<Pair<String, Integer>> f = (CompletedFuture)o;
                     Pair<String, Integer> p = f.get();
                     cache.tell(new StoreMsg(p.first(), p.second()), ActorRef.noSender());
                     return HttpResponse.create().withEntity(String.valueOf(p.second()));
