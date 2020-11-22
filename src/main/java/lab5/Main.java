@@ -70,7 +70,8 @@ public class Main {
                         if (res != null) {
                             return new CompletedFuture<Integer>((Integer) res, null);
                         }
-                        return Source.from()
+                        return Source.single(p)
+                                
                     });
                 });
 
