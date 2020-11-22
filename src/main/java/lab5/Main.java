@@ -28,7 +28,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-
+import org.asynchttpclient.*;
 
 public class Main {
     private final static Duration timeout = Duration.ofSeconds(5);
@@ -73,7 +73,7 @@ public class Main {
                                     return new ArrayList<>(Collections.nCopies(pair.second(), pair.first()));
                                 })
                                 .mapAsync(p.second(), (String url)->{
-                                        
+                                    
                                 })
 
 
