@@ -90,7 +90,7 @@ public class Main {
                                     asyncHttpClient.close();
                                     return CompletableFuture.completedFuture((int) time);
                                 });
-                        return Source.single(p).via(interFlow)
+                        return Source.single(p).via(interFlow).toMat()
 
                     });
                 });
