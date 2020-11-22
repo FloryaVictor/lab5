@@ -35,6 +35,8 @@ import java.util.concurrent.Future;
 
 import lab5.Messages.StoreMsg;
 import org.asynchttpclient.*;
+import scala.Int;
+
 import static org.asynchttpclient.Dsl.*;
 
 public class Main {
@@ -74,7 +76,7 @@ public class Main {
                         if (res != null) {
                             return new CompletedFuture<Integer>((Integer) res, null);
                         }
-                        Flow<Pair<String, Integer>, Integer, NotUsed>  =
+                        Flow<Pair<String, Integer>, Integer, NotUsed> interFlow =
                                 Flow.<Pair<String, Integer>>create()
                                 .mapConcat(pair->{
                                     return new ArrayList<>(Collections.nCopies(pair.second(), pair.first()));
@@ -88,9 +90,8 @@ public class Main {
                                     asyncHttpClient.close();
                                     return CompletableFuture.completedFuture((int) time);
                                 });
+                        return
 
-                        return Source.single(p)
-                                .toMat(testSink, Keep.right()).run(mat);
                     });
                 });
 
