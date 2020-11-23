@@ -41,7 +41,7 @@ import static org.asynchttpclient.Dsl.*;
 
 public class Main {
     private final static Duration timeout = Duration.ofSeconds(5);
-    private final static AsyncHttpClient async = asyncHttpClient(config().setProxyServer(proxyServer("127.0.0.1", 38080)));
+    private final static AsyncHttpClient c = asyncHttpClient();
     private static ActorRef cache;
 
     public static void main(String[] args) throws IOException {
@@ -63,7 +63,7 @@ public class Main {
                 .thenAccept(unbound ->{
                     system.terminate();
                     try {
-                        async.close();
+                        asyncHttpClient.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -91,7 +91,7 @@ public class Main {
                                 })
                                 .mapAsync(p.second(), (String url)->{
                                     Instant t = Instant.now();
-                                    Future<Response> resp = async.prepareGet(url).execute();
+                                    Future<Response> resp = asyncHttpClient.prepareGet(url).execute();
                                     resp.get();
                                     long time = t.until(Instant.now(), ChronoUnit.MILLIS);
                                     return CompletableFuture.completedFuture((int) time);
