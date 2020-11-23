@@ -93,7 +93,7 @@ public class Main {
                                 .mapConcat(pair->{
                                     return new ArrayList<>(Collections.nCopies(pair.second(), pair.first()));
                                 })
-                                .mapAsync(p.second(), (String url)->{
+                                .mapAsync(1, (String url)->{
                                     Instant t = Instant.now();
                                     Future<Response> resp = asyncHttpClient.prepareGet(url).execute();
                                     resp.get();
