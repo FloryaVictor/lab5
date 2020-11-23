@@ -75,10 +75,9 @@ public class Main {
                 })
                 .mapAsync(1, (Pair<String, Integer> p)->{
                     CompletionStage<Object> cs = Patterns.ask(cache, new GetMsg(p.first()), timeout);
-                    return cs.thenApply((Object res)->{
+                    return cs.thenCompose((Object res)->{
                         if ((Integer)res >= 0) {
-                            return new CompletedFuture<>(new Pair<>(p.first(), (Integer) res),
-                                    null);
+                            return CompletableFuture.completedFuture(new Pair<>(p.first(), (Integer) res));
                         }
                         Flow<Pair<String, Integer>, Integer, NotUsed> interFlow =
                                 Flow.<Pair<String, Integer>>create()
@@ -101,12 +100,13 @@ public class Main {
                                 });
                     });
                 })
-                .map((Object o)->{
-                    CompletableFuture<Pair<String, Integer>> f = (CompletableFuture<Pair<String, Integer>>)o;
-                    Pair<String, Integer> p = f.get();
-                    cache.tell(new StoreMsg(p.first(), p.second()), ActorRef.noSender());
-                    return HttpResponse.create().withEntity(String.valueOf(p.second()));
-                })
-                .map();
+                .mapAsync(1, (Object o)->{
+                    CompletionStage<Pair<String, Integer>> cs = (CompletionStage<Pair<String, Integer>>)o;
+                    return cs.thenApply((Pair<String, Integer> p)->{
+                        cache.tell(new StoreMsg(p.first(), p.second()), ActorRef.noSender());
+                        return HttpResponse.create().withEntity(String.valueOf(p.second()));
+                    });
+                });
+
     }
 }
