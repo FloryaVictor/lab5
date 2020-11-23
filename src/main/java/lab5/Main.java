@@ -100,13 +100,9 @@ public class Main {
                                 });
                     });
                 })
-                .mapAsync(1, (Object o)->{
-                    CompletionStage<Pair<String, Integer>> cs = (CompletionStage<Pair<String, Integer>>)o;
-                    return cs.thenApply((Pair<String, Integer> p)->{
-                        cache.tell(new StoreMsg(p.first(), p.second()), ActorRef.noSender());
-                        return HttpResponse.create().withEntity(String.valueOf(p.second()));
-                    });
+                .map((Pair<String, Integer> p)->{
+                    cache.tell(new StoreMsg(p.first(), p.second()), ActorRef.noSender());
+                    return HttpResponse.create().withEntity(String.valueOf(p.second()));
                 });
-
     }
 }
