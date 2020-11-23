@@ -71,7 +71,7 @@ public class Main {
                     Query q = req.getUri().query();
                     String url = q.get("testUrl").get();
                     Integer count = Integer.parseInt(q.get("count").get());
-                    return new Pair<String, Integer>(url, count);
+                    return new Pair<>(url, count);
                 })
                 .mapAsync(1, (Pair<String, Integer> p)->{
                     CompletionStage<Object> cs = Patterns.ask(cache, new GetMsg(p.first()), timeout);
