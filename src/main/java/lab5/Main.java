@@ -98,7 +98,7 @@ public class Main {
                                 .run(mat)
                                 .thenApply(sum->{
                                     return new Pair<>(p.first(), sum/p.second());
-                                }).toCompletableFuture();
+                                });
                     });
                 })
                 .map((Object o)->{
