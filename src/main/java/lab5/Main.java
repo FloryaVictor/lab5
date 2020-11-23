@@ -43,6 +43,7 @@ public class Main {
     private final static Duration timeout = Duration.ofSeconds(5);
     private final static AsyncHttpClient asyncHttpClient = asyncHttpClient();
     private static ActorRef cache;
+
     public static void main(String[] args) throws IOException {
         System.out.println("start!");
         ActorSystem system = ActorSystem.create("lab5");
@@ -59,7 +60,14 @@ public class Main {
         System.in.read();
         binding
                 .thenCompose(ServerBinding::unbind)
-                .thenAccept(unbound -> system.terminate());
+                .thenAccept(unbound ->{
+                    system.terminate();
+                    try {
+                        asyncHttpClient.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 
     public static Flow<HttpRequest, HttpResponse, NotUsed> createFlow(ActorMaterializer mat){
