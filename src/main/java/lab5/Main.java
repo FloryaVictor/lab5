@@ -41,7 +41,8 @@ import static org.asynchttpclient.Dsl.*;
 
 public class Main {
     private final static Duration timeout = Duration.ofSeconds(5);
-    private final static AsyncHttpClient asyncHttpClient = asyncHttpClient();
+    private final static AsyncHttpClient c = asyncHttpClient();
+    AsyncHttpClient async = c(config().setProxyServer(proxyServer("127.0.0.1", 38080)));
     private static ActorRef cache;
 
     public static void main(String[] args) throws IOException {
