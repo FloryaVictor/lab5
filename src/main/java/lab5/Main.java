@@ -7,37 +7,34 @@ import akka.actor.Props;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
-
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.model.Query;
 import akka.japi.Pair;
-
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
-
 import akka.stream.javadsl.Flow;
 import akka.stream.javadsl.Keep;
 import akka.stream.javadsl.Sink;
 import akka.stream.javadsl.Source;
-import com.sun.xml.internal.ws.util.CompletedFuture;
-import lab5.Actors.CacheActor;
-import lab5.Messages.GetMsg;
+
+import org.asynchttpclient.*;
 
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-
 import java.util.concurrent.Future;
 
+
+import lab5.Actors.CacheActor;
+import lab5.Messages.GetMsg;
 import lab5.Messages.StoreMsg;
-import org.asynchttpclient.*;
+
 
 
 import static org.asynchttpclient.Dsl.*;
@@ -79,7 +76,7 @@ public class Main {
                         if ((Integer)res >= 0) {
                             return CompletableFuture.completedFuture(new Pair<>(p.first(), (Integer) res));
                         }
-                        Flow<Pair<String, Integer>, Integer, NotUsed> interFlow =
+                        Flow<Pair<String, Integer>, Integer, NotUsed> requestFlow =
                                 Flow.<Pair<String, Integer>>create()
                                 .mapConcat(pair->{
                                     return new ArrayList<>(Collections.nCopies(pair.second(), pair.first()));
@@ -92,7 +89,7 @@ public class Main {
                                     return CompletableFuture.completedFuture((int) time);
                                 });
                         return Source.single(p)
-                                .via(interFlow)
+                                .via(requestFlow)
                                 .toMat(Sink.fold(0, Integer::sum), Keep.right())
                                 .run(mat)
                                 .thenApply(sum->{
