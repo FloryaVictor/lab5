@@ -43,6 +43,10 @@ public class Main {
     private final static Duration timeout = Duration.ofSeconds(5);
     private final static AsyncHttpClient asyncHttpClient = asyncHttpClient();
     private static ActorRef cache;
+    private final static String HOST = "localhost";
+    private final static Integer PORT = 8080;
+    private final static String URL = "testUrl";
+    private final static String COUNT = "count";
 
     public static void main(String[] args) throws IOException {
         System.out.println("start!");
@@ -53,7 +57,7 @@ public class Main {
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = createFlow(materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                routeFlow,
-               ConnectHttp.toHost("localhost", 8080),
+               ConnectHttp.toHost(HOST, PORT),
                materializer
         );
         System.out.println("Server online at http://localhost:8080/\nPress RETURN to stop...");
@@ -74,8 +78,8 @@ public class Main {
         return Flow.of(HttpRequest.class)
                 .map((req) ->{
                     Query q = req.getUri().query();
-                    String url = q.get("testUrl").get();
-                    Integer count = Integer.parseInt(q.get("count").get());
+                    String url = q.get(URL).get();
+                    Integer count = Integer.parseInt(q.get(COUNT).get());
                     return new Pair<>(url, count);
                 })
                 .mapAsync(1, (Pair<String, Integer> p)->{
